@@ -9,3 +9,6 @@ venv/
 
 # Secrets — never commit tokens
 .env
+
+# Python environment used inside the agent container (.venv is the host's)
+.venv-container/
