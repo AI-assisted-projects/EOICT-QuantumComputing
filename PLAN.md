@@ -44,11 +44,16 @@ milestone here (see Milestones).
 - Downloading Python packages.
 
 ## Milestones
-None planned. Accepted suggestions add milestones here, marked `(💡 accepted suggestion S<n>)`.
+None planned up front. Accepted suggestions add milestones here, marked `(💡 accepted suggestion S<n>)`.
 
 ### M0 — Minimal plan
 - Deliverable: this plan, so suggestions can be added to the project.
 - Verification: review of the plan files.
+
+### M1 — Full review of qclab and notebooks (💡 accepted suggestion S10)
+- Deliverable: `REVIEW.md` (findings, confirmed-correct list, prioritised suggestions), pytest-style checks for qclab, fixes of clear factual mistakes in notebook text.
+- Verification: pytest passes; both notebooks run top to bottom in `.venv-container`, IBM bonus skipped.
+- Self-check acceptance and course structure are not changed without asking the owner; proposals go in REVIEW.md.
 
 ## Delegation notes
 Qwen may draft explanation text and extra self-check cases. Not the solutions themselves.

@@ -1,9 +1,9 @@
 # Progress: QC
 
-Status: done
+Status: active
 <!-- The runner reads this line: planning | active | blocked | done -->
 Blocked reason: -
-Current milestone: M0 done (merged, PR #1)
+Current milestone: M1 — Full review of qclab and notebooks
 
 ## Tasks
 
@@ -11,6 +11,14 @@ Current milestone: M0 done (merged, PR #1)
 - [x] Write PLAN.md, PROGRESS.md and DECISIONS.md
 
 <!-- Accepted suggestions add their milestone and tasks below, marked (💡 accepted suggestion S<n>). -->
+
+### M1 — Full review of qclab and notebooks (💡 accepted suggestion S10)
+- [ ] Review qclab/states.py and qclab/runner.py: qubit order (Qiskit little-endian), normalisation, shots and seeds. Add quick pytest-style checks for known states (Bell, GHZ, H, X). Write findings to REVIEW.md. (💡 accepted suggestion S10)
+- [ ] Review qclab/check.py and qclab/viz.py. Test every self-check with the correct answer, a wrong answer and an edge case. Don't change what checks accept without asking; list proposed changes in REVIEW.md. (💡 accepted suggestion S10)
+- [ ] Review the teacher notebook exercise by exercise: verify each solution, physics claims and gate conventions (CX control/target, bit order, phases). Record errors in REVIEW.md and fix clear factual mistakes in the text. (💡 accepted suggestion S10)
+- [ ] Review the student notebook: no solutions, same exercises in same order as teacher copy, wording clear for beginners. Record findings in REVIEW.md. (💡 accepted suggestion S10)
+- [ ] Run both notebooks top to bottom in .venv-container with the IBM bonus skipped; confirm the bonus skips cleanly without using the token. Check pyproject.toml dependencies and README accuracy. (💡 accepted suggestion S10)
+- [ ] Write the final summary in REVIEW.md: confirmed correct, bugs fixed, prioritised suggestions (incl. changes needing owner approval). (💡 accepted suggestion S10)
 
 ## Session log
 <!-- Newest first: YYYY-MM-DD — task — result — how verified — Qwen used? (y/n) -->
