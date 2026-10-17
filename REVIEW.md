@@ -83,3 +83,19 @@ Read cell by cell and compared with the teacher notebook.
 Remaining tasks (notebook run, README/pyproject, final summary) are still open.
 
 Note: `pytest` is not in `pyproject.toml` (installed only in `.venv-container`). Adding it as an optional dev dependency needs the owner's approval (new dependency) — proposed, not done.
+
+## 5. Notebook execution, pyproject.toml and README
+
+Both notebooks were executed top to bottom in `.venv-container` (code cells exec'd in order, Agg backend; nbformat/nbconvert/ipykernel are not installed there, so a small runner script was used and IPython was installed to a temp dir outside the repo). To make sure the IBM token was never used, the run used a **copy of the project without `.env`** and with `QISKIT_IBM_TOKEN` unset; the loaded `qclab` was confirmed to come from the copy.
+
+### Confirmed
+- **Teacher notebook**: all 14 code cells run without error; every check prints ✅ (Ex 1, Ex 2, all five Ex 4 targets). The bonus cell skips cleanly with "No QISKIT_IBM_TOKEN found ...".
+- **Student notebook**: runs up to the TODO stubs, as intended. Unfilled exercises raise (e.g. `No counts for experiment "0"`, fidelity assertion in Ex 1, `Build all four circuits first!`), which is the expected behaviour for a blank workbook.
+- Versions found: qiskit 2.6.0, aer 0.17.2, runtime 0.50.0, numpy 2.5.4, matplotlib 3.11.2: all within the `pyproject.toml` bounds. pytest: all tests pass.
+- README setup, file table, qubit-order section and bonus instructions match the code (`run_on_ibm` picks the least-busy backend, token read from env or `.env`).
+
+### Findings (not changed; need approval where a dependency changes)
+1. **IPython/ipykernel not in `pyproject.toml`** (medium). Notebooks import `IPython.display` and `qclab.viz` uses IPython, but `uv sync` does not install it (it was absent from `.venv-container`). VS Code normally offers to install `ipykernel` on first use, but a fresh setup following the README may stall there. Proposal: add `ipykernel>=6` to dependencies (new dependency: owner approval). Alongside, add `pytest` as an optional dev dependency.
+2. **Student bonus cell skip message is misleading** (low). If Ex 1/2 are not finished, the `try/except` prints `Skipped ... '00'` (a bare KeyError) rather than the token message. Harmless, but suggest printing `type(e).__name__` or a hint "finish Exercise 2 first".
+3. README troubleshooting says "`qclab` is a local package in the working directory", but `qclab.egg-info` suggests it is also installed editable; wording is fine for notebooks launched from the project root.
+4. README says `.env.example` exists; confirmed present. `.env` is git-ignored (checked `.gitignore`).
