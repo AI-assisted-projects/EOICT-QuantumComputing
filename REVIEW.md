@@ -57,6 +57,29 @@ Every solution was re-derived by hand and cross-checked with the simulator.
 ### Notes (not changed)
 - The bonus claim of "~10 minutes of free execution per month" is IBM policy and may change; not verifiable offline.
 
-Remaining tasks (notebooks, README/pyproject, final summary) are still open.
+## 4. Student notebook (exercises_student.ipynb)
+
+Read cell by cell and compared with the teacher notebook.
+
+### Confirmed correct
+- Same sections in the same order as the teacher copy: intro/concepts, Ex 1, Ex 2, Ex 3, Ex 4 (five targets), Bonus, wrap-up.
+- No solutions leaked: Ex 1/2/4 contain only `# TODO` stubs (target functions only have the measurement loop); stored outputs exist only in the demo cells (1, 5, 7, 8).
+- Qubit-order explanation, the "ab → a is qubit 1" hint in Ex 2, the Ex 4 recipe examples (targets 3 and 4) and the colour note (cyan = 0°, red = 180°) are consistent with the verified conventions.
+- The bonus cell is wrapped in try/except and prints a skip message.
+
+### Fixed (text only)
+- Ex 1 said the counts "will never be exactly 512/512"; that is false (about 2.5% of runs). Now: "almost never".
+
+### Findings (not changed)
+1. **Exercise 3 is already solved in the student notebook** (medium): the gate matrices (cell 23) and the full Bell matrix (cell 24) are given in full, and cell 25 does the H|0> check. The only student action is the optional "TODO: try other starting states". If Ex 3 should be a real exercise, remove or blank cells 23/24. Content decision for the owner.
+2. **Ex 2 self-check prints ✅ without checking the point of the exercise** (medium): the comment says the two phi states "must NOT be identical" but the cell only prints `Same internal state? False`; nothing asserts it, and `✅` is printed regardless. Suggest `assert not np.allclose(...)` or a fidelity-based check (changes what the check accepts, so needs approval).
+3. **Ex 1 cell 14**: "this may already be the right answer" gives the answer away; harmless, but could say "check this is the gate you used".
+4. **Ex 1 TODO**: the measurement line is commented out (`# q1.measure(0, 0)`); a student who forgets to uncomment gets the raw Qiskit error from `simulate` (see section 1, finding 2). Add a hint "uncomment this line".
+5. **Ex 4 recipe step 3** (anti-correlation) is the densest paragraph for beginners; "seed goes 0 → 1" is ambiguous about which target is the starting point. Suggest one worked circuit for target 4 or a wording like "in target 4 the two strings differ in qubits 2 and 0, in opposite directions".
+6. **Ex 4 self-check** stops at the first failing target (assertion), fine, but later targets are not run; mention "fix targets in order".
+7. Setup cell and intro tell students to use `.venv`; `.venv-container` is only the sandbox. Check against README in task 5.
+8. Wrap-up: the nested bullet under the first point is oddly indented (cosmetic).
+
+Remaining tasks (notebook run, README/pyproject, final summary) are still open.
 
 Note: `pytest` is not in `pyproject.toml` (installed only in `.venv-container`). Adding it as an optional dev dependency needs the owner's approval (new dependency) — proposed, not done.
