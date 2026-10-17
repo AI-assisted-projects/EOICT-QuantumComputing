@@ -39,6 +39,24 @@ Checked with `tests/test_check_viz.py` (7 tests; whole suite: 22 passed). No cod
 7. **Statistical power** (info): 5% tol with 1024 shots (σ≈1.6%) is ~3σ, so a correct circuit fails about 0.3% of the time on the simulator; a mildly wrong answer (e.g. 0.56/0.44) passes. Consider fixed seed in `simulate` (see section 1, finding 1) to make checks deterministic.
 8. `viz.py`: `plot_counts` docstring is correct; `draw_circuit` sizes the figure by gate count (cosmetic); unused `matplotlib` import style is fine. Annotation hides probabilities below 0.05 for >8 states (intended).
 
+## 3. Teacher notebook (solutions_teacher.ipynb)
+
+Every solution was re-derived by hand and cross-checked with the simulator.
+
+### Confirmed correct
+- Ex 1 (H, 50/50, [0.707, 0.707]); Ex 2 (all four starts give Φ⁺, Φ⁻, Ψ⁺, Ψ⁻ up to global phase, table and the "same counts, different phase" point are right; start `11` gives -Ψ⁻, global phase only).
+- Ex 3 matrices: H, X, textbook CX (control q1, target q0 = swap of |10⟩↔|11⟩) and the mirror-image matrix for a bare `CXGate()` (control q0) are right. U_Bell columns are the Bell states.
+- Ex 4: all five targets and their gate lists are right, including the step-by-step derivation of target 5 (checked by hand; the notebook's own assertions also verify state and counts).
+
+### Errors found and fixed (text only, no solutions changed)
+1. Teaching note on U_Bell said columns 1&3 map to the Φ states and 2&4 to the Ψ states; correct is columns 1&2 (inputs 00, 01) → Φ, columns 3&4 (10, 11) → Ψ.
+2. Phase colours were described as "red = 0°, blue = 180°". `plot_statevector` uses hue = phase/2π + 0.5, so 0° is **cyan** and 180° is **red**. Fixed in the teacher notebook and in the one matching comment in the student notebook.
+3. Convention note claimed the Bell/target circuits "seed the lowest qubit"; the 3-qubit targets seed qubit 2. Reworded: the seed qubit is the control.
+4. Cell with `print(f"U|{start}\rangle ...")`: `\r` is a carriage return in a normal string, garbling the printed output. Replaced `\rangle` with `⟩`.
+
+### Notes (not changed)
+- The bonus claim of "~10 minutes of free execution per month" is IBM policy and may change; not verifiable offline.
+
 Remaining tasks (notebooks, README/pyproject, final summary) are still open.
 
 Note: `pytest` is not in `pyproject.toml` (installed only in `.venv-container`). Adding it as an optional dev dependency needs the owner's approval (new dependency) — proposed, not done.
