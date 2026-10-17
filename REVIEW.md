@@ -99,3 +99,28 @@ Both notebooks were executed top to bottom in `.venv-container` (code cells exec
 2. **Student bonus cell skip message is misleading** (low). If Ex 1/2 are not finished, the `try/except` prints `Skipped ... '00'` (a bare KeyError) rather than the token message. Harmless, but suggest printing `type(e).__name__` or a hint "finish Exercise 2 first".
 3. README troubleshooting says "`qclab` is a local package in the working directory", but `qclab.egg-info` suggests it is also installed editable; wording is fine for notebooks launched from the project root.
 4. README says `.env.example` exists; confirmed present. `.env` is git-ignored (checked `.gitignore`).
+
+## 6. Final summary
+
+### Confirmed correct
+- Simulation core (`states.py`, `runner.py`): qubit order (Qiskit little-endian), normalisation, CX control/target, measurement handling. 22 pytest checks pass.
+- Self-checks (`check.py`): accept right answers, reject wrong ones, and tell relative phase apart from global phase.
+- Teacher notebook: every solution re-derived by hand and cross-checked on the simulator. It runs top to bottom and the IBM bonus skips cleanly. The IBM token was never used.
+- Student notebook: no leaked solutions, same exercises in the same order as the teacher copy.
+- README matches the code; `.env` is git-ignored.
+
+### Bugs fixed (text only, no code or check changes)
+- Teacher notebook: U_Bell column mapping, phase colours (0° is cyan, 180° is red), "seed qubit" convention note, `\r` garbling a printed f-string.
+- Student notebook: phase-colour comment, and "never 512/512" changed to "almost never".
+
+### Prioritised suggestions
+Need owner approval (they change what checks accept, the course structure or dependencies):
+1. Make Ex 2's self-check actually assert the point of the exercise (the two phi states differ) instead of always printing ✅ (student notebook, section 4 #2).
+2. Decide whether Ex 3 should stay pre-solved in the student notebook (section 4 #1). This is a course-structure decision.
+3. Add `ipykernel` to the dependencies and `pytest` as an optional dev dependency (section 5 #1). These are new dependencies.
+4. Validate bit-string length and expected probabilities in `check.py` and give clear `ValueError`s (section 2 #1, #6).
+
+No approval needed (small and backwards compatible):
+5. Optional `seed` argument in `simulate`, to make checks deterministic. A friendly error when a circuit has no measurements (section 1 #1, #2).
+6. Student-notebook wording: an "uncomment this line" hint in Ex 1, a clearer Ex 4 recipe step 3, a better bonus skip message (section 4 #3–#6, section 5 #2), and the cosmetic indentation in the wrap-up.
+7. Low priority: float-fragile boundary in `assert_distribution` and statistical power of the 5% tolerance (section 2 #4, #7).
