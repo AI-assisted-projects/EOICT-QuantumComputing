@@ -21,7 +21,7 @@ Current milestone: M2 (approved M1 suggestions)
 - [x] Write the final summary in REVIEW.md: confirmed correct, bugs fixed, prioritised suggestions (incl. changes needing owner approval). (💡 accepted suggestion S10)
 
 ### M2 — Apply approved M1 review suggestions (owner-approved on PR #3)
-- [ ] Ex 2 self-check in the student notebook must assert the point of the exercise (the two phi states differ) instead of always printing. (REVIEW.md M1 suggestion 1; student notebook section 4 #2)
+- [x] Ex 2 self-check in the student notebook must assert the point of the exercise (the two phi states differ) instead of always printing. (REVIEW.md M1 suggestion 1; student notebook section 4 #2)
 - [ ] Ex 3 must NOT stay pre-solved in the student notebook: remove or blank the given gate matrices and Bell matrix cells (cells 23/24) so students do the work; keep the teacher notebook as the solution. (REVIEW.md M1 suggestion 2; owner decision)
 - [ ] Add `ipykernel` to the dependencies and `pytest` as an optional dev dependency in pyproject.toml. (REVIEW.md M1 suggestion 3)
 - [ ] Validate bit-string length and expected probabilities in `check.py` and raise clear `ValueError`s; add tests. (REVIEW.md M1 suggestion 4)
@@ -31,6 +31,7 @@ Current milestone: M2 (approved M1 suggestions)
 
 ## Session log
 <!-- Newest first: YYYY-MM-DD — task — result — how verified — Qwen used? (y/n) -->
+- 2026-10-18 — M2 task 1: Ex 2 self-check asserts the phi states differ (overlap < 0.99) — done; student notebook cell 21 only — checked the logic with Qiskit on the correct pair (overlap 0 passes) and a wrong pair (same state, overlap 1 fails); notebook JSON diff is 4 lines — n
 - 2026-10-18 — PR #3 feedback — added M2 with 7 tasks for the owner-approved suggestions (Ex 3 must not stay pre-solved); no code changed — docs only, checked against REVIEW.md lines 118-126 and PR comments — n
 - 2026-10-18 — M1 task 6: final summary in REVIEW.md — done; confirmed-correct list, fixes and 7 prioritised suggestions (4 need owner approval) — docs only, re-read against sections 1-5 — n
 - 2026-10-18 — M1 task 5: run notebooks, check pyproject/README — done; teacher runs clean, student runs up to its TODO stubs, bonus skips cleanly; run in a copy without .env so the token was never used; 4 findings (IPython/ipykernel missing from deps) in REVIEW.md — custom exec runner (no nbconvert), pytest 22 passed — n
