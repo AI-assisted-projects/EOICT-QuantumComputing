@@ -1,6 +1,6 @@
 # Progress: QC
 
-Status: active
+Status: done
 <!-- The runner reads this line: planning | active | blocked | done -->
 Blocked reason: -
 Current milestone: M2 done (PR open); no further milestones
@@ -30,6 +30,7 @@ Current milestone: M2 done (PR open); no further milestones
 - [x] Low priority: fix the float-fragile boundary in `assert_distribution` and review the statistical power of the 5% tolerance. (REVIEW.md M1 suggestion 7)
 
 ## Session log
+- 2026-10-18 — final check: all plan tasks done, PR #4 open without review comments, no new answers or suggestions; Status set to done — bookkeeping only — n
 <!-- Newest first: YYYY-MM-DD — task — result — how verified — Qwen used? (y/n) -->
 - 2026-10-18 — M2 task 7: `assert_distribution` boundary fixed with 1e-9 epsilon (exactly-at-tol now passes); tol 0.05 left unchanged (statistical power: ~3σ at 1024 shots, documented in REVIEW.md, use `simulate(seed=...)` for determinism) — done — 2 new tests, pytest 26 passed — n
 - 2026-10-18 — M2 task 6: student notebook wording (Ex 1 uncomment hint, Ex 4 step 3 summary line, bonus skip message with exception type and hint, wrap-up indentation) — done — notebook JSON loads, diff reviewed (text only, 9 lines); not executed — n
