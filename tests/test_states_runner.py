@@ -96,7 +96,11 @@ def test_simulate_shots_respected():
 
 
 def test_simulate_without_measurement_raises():
-    from qiskit.exceptions import QiskitError
     qc = QuantumCircuit(1); qc.h(0)
-    with pytest.raises(QiskitError):
+    with pytest.raises(ValueError, match="measure"):
         simulate(qc, shots=10)
+
+
+def test_simulate_seed_is_reproducible():
+    qc = QuantumCircuit(1); qc.h(0); qc.measure_all()
+    assert simulate(qc, shots=200, seed=7) == simulate(qc, shots=200, seed=7)

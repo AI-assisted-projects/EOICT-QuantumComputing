@@ -53,10 +53,10 @@ def test_statevector_edges():
 
 
 def test_statevector_bad_bitstring_lengths():
-    # documented finding: wrong-length keys are not rejected
     qc = QuantumCircuit(2); qc.x(0)
-    assert assert_statevector(qc, {"1": 1})  # "1" is read as "01" (silent)
-    with pytest.raises(IndexError):
+    with pytest.raises(ValueError):  # "1" used to be silently read as "01"
+        assert_statevector(qc, {"1": 1})
+    with pytest.raises(ValueError):
         assert_statevector(qc, {"111": 1})
 
 
@@ -73,14 +73,11 @@ def test_distribution():
 
 
 def test_distribution_edges():
-    with pytest.raises(AssertionError):  # empty counts: fails cleanly, no crash
+    with pytest.raises(ValueError):  # empty counts
         assert_distribution({}, {"0": 1.0})
-    with pytest.raises(ZeroDivisionError):  # counts with only zeros: raw crash
+    with pytest.raises(ValueError):  # counts with only zeros
         assert_distribution({"0": 0}, {"0": 1.0})
-    # expected probs not summing to 1 are not validated
-    assert assert_distribution({"0": 1000}, {"0": 1.0})
-    # multi-register keys with spaces never match plain keys
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError):  # multi-register keys with spaces
         assert_distribution({"0 0": 1000}, {"00": 1.0})
 
 
@@ -94,3 +91,33 @@ def test_viz_return_figures():
     big = QuantumCircuit(4); big.h(range(4))
     assert plot_statevector(big) is not None
     plt.close("all")
+
+
+def test_validation_errors():
+    import pytest
+    from qiskit import QuantumCircuit
+    from qclab.check import assert_distribution, assert_statevector
+
+    qc = QuantumCircuit(2)
+    with pytest.raises(ValueError):
+        assert_statevector(qc, {"0": 1})
+    with pytest.raises(ValueError):
+        assert_statevector(qc, {"0a": 1})
+    with pytest.raises(ValueError):
+        assert_distribution({"00": 10}, {"00": 0.5})
+    with pytest.raises(ValueError):
+        assert_distribution({"00": 10}, {"00": 1.5, "11": -0.5})
+    with pytest.raises(ValueError):
+        assert_distribution({"00": 10}, {"000": 1.0})
+    with pytest.raises(ValueError):
+        assert_distribution({}, {"00": 1.0})
+
+
+def test_assert_distribution_accepts_deviation_exactly_at_tol():
+    # 550/450 vs 0.5/0.5 deviates by exactly 0.05 (0.55 - 0.5 is 0.05000000000000004 in floats)
+    assert assert_distribution({"0": 550, "1": 450}, {"0": 0.5, "1": 0.5}, tol=0.05)
+
+
+def test_assert_distribution_still_rejects_clearly_larger_deviation():
+    with pytest.raises(AssertionError):
+        assert_distribution({"0": 551, "1": 449}, {"0": 0.5, "1": 0.5}, tol=0.05)
