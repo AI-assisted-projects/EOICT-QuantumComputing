@@ -111,3 +111,13 @@ def test_validation_errors():
         assert_distribution({"00": 10}, {"000": 1.0})
     with pytest.raises(ValueError):
         assert_distribution({}, {"00": 1.0})
+
+
+def test_assert_distribution_accepts_deviation_exactly_at_tol():
+    # 550/450 vs 0.5/0.5 deviates by exactly 0.05 (0.55 - 0.5 is 0.05000000000000004 in floats)
+    assert assert_distribution({"0": 550, "1": 450}, {"0": 0.5, "1": 0.5}, tol=0.05)
+
+
+def test_assert_distribution_still_rejects_clearly_larger_deviation():
+    with pytest.raises(AssertionError):
+        assert_distribution({"0": 551, "1": 449}, {"0": 0.5, "1": 0.5}, tol=0.05)

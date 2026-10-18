@@ -117,7 +117,8 @@ def assert_distribution(
         if dev > max_dev:
             max_dev, worst = dev, (bits, p, e)
 
-    if max_dev > tol:
+    # small epsilon so a deviation of exactly ``tol`` is not rejected by float rounding
+    if max_dev > tol + 1e-9:
         got = {f"|{b}⟩": f"{p:.3f}" for b, p in sorted(probs.items()) if p > 1e-4}
         exp = {f"|{b}⟩": f"{p:.3f}" for b, p in sorted(expected_probs.items())}
         raise AssertionError(
