@@ -21,6 +21,12 @@ from .states import statevector_of
 
 def _bitstring_to_index(bits: str, n_qubits: int) -> int:
     """Convert a bit-string like "101" to its integer index (leftmost = highest qubit)."""
+    if not isinstance(bits, str) or not bits or set(bits) - {"0", "1"}:
+        raise ValueError(f"{bits!r} is not a bit-string; use only 0 and 1, e.g. \"01\".")
+    if len(bits) != n_qubits:
+        raise ValueError(
+            f"Bit-string {bits!r} has {len(bits)} bits but the circuit has {n_qubits} qubits."
+        )
     return int(bits, 2)
 
 
@@ -85,7 +91,20 @@ def assert_distribution(
     simulator has a finite number of shots (statistical fluctuation), and real
     hardware adds noise on top. A 5% tolerance is a reasonable default.
     """
+    if not expected_probs:
+        raise ValueError("expected_probs is empty.")
+    if any(p < 0 for p in expected_probs.values()):
+        raise ValueError("expected_probs contains a negative probability.")
+    if abs(sum(expected_probs.values()) - 1) > 1e-6:
+        raise ValueError(
+            f"expected_probs must sum to 1, but sums to {sum(expected_probs.values()):.4f}."
+        )
+    lengths = {len(b) for b in list(counts) + list(expected_probs)}
+    if len(lengths) > 1:
+        raise ValueError(f"Bit-strings have different lengths: {sorted(lengths)}.")
     total = sum(counts.values())
+    if total <= 0:
+        raise ValueError("counts is empty: nothing was measured.")
     probs = {bits: c / total for bits, c in counts.items()}
 
     max_dev = 0.0
