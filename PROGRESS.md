@@ -40,3 +40,4 @@ Current milestone: M2 (approved M1 suggestions)
 - 2026-10-18 — M1 task 1: review states.py/runner.py — done; no bugs, 5 minor findings in REVIEW.md, 15 pytest checks added in tests/ — pytest 15 passed in .venv-container — n
 - 2026-10-18 — bookkeeping cleanup (S9) — done — checked PROGRESS/PLAN/DECISIONS agree, PR #1 confirmed merged via gh — n
 - 2026-10-15 — minimal plan written at the owner's request (no session) — done — PR #1 merged 2026-10-15 — n
+- 2026-10-18 — PR #3 feedback — no change needed; review is approved, remaining inline comments were 'Ok!' and the 'add approved suggestions as tasks' request was already done (M2) — checked PR comments/review state, docs-only so no tests run — n
