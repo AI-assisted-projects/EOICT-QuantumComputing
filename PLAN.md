@@ -55,5 +55,9 @@ None planned up front. Accepted suggestions add milestones here, marked `(💡 a
 - Verification: pytest passes; both notebooks run top to bottom in `.venv-container`, IBM bonus skipped.
 - Self-check acceptance and course structure are not changed without asking the owner; proposals go in REVIEW.md.
 
+### M2 — Apply approved M1 review suggestions
+- Deliverable: the seven owner-approved suggestions from REVIEW.md (M1 summary), listed as tasks in PROGRESS.md. Ex 3 must not stay pre-solved in the student notebook.
+- Verification: pytest passes; both notebooks run top to bottom in `.venv-container`, IBM bonus skipped.
+
 ## Delegation notes
 Qwen may draft explanation text and extra self-check cases. Not the solutions themselves.
