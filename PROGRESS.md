@@ -25,12 +25,13 @@ Current milestone: M2 (approved M1 suggestions)
 - [x] Ex 3 must NOT stay pre-solved in the student notebook: remove or blank the given gate matrices and Bell matrix cells (cells 23/24) so students do the work; keep the teacher notebook as the solution. (REVIEW.md M1 suggestion 2; owner decision)
 - [x] Add `ipykernel` to the dependencies and `pytest` as an optional dev dependency in pyproject.toml. (REVIEW.md M1 suggestion 3)
 - [x] Validate bit-string length and expected probabilities in `check.py` and raise clear `ValueError`s; add tests. (REVIEW.md M1 suggestion 4)
-- [ ] Optional `seed` argument in `simulate`, and a friendly error when a circuit has no measurements; add tests. (REVIEW.md M1 suggestion 5)
+- [x] Optional `seed` argument in `simulate`, and a friendly error when a circuit has no measurements; add tests. (REVIEW.md M1 suggestion 5)
 - [ ] Student-notebook wording: "uncomment this line" hint in Ex 1, clearer Ex 4 recipe step 3, better bonus skip message, cosmetic indentation in the wrap-up. (REVIEW.md M1 suggestion 6)
 - [ ] Low priority: fix the float-fragile boundary in `assert_distribution` and review the statistical power of the 5% tolerance. (REVIEW.md M1 suggestion 7)
 
 ## Session log
 <!-- Newest first: YYYY-MM-DD — task — result — how verified — Qwen used? (y/n) -->
+- 2026-10-18 — M2 task 5: `simulate(seed=None)` optional seed; ValueError with a measure_all hint when no measurements — done; old test expecting QiskitError updated, seed test added — pytest run — n
 - 2026-10-18 — M2 task 4: check.py validates bit-string chars/length, expected_probs (non-empty, non-negative, sums to 1) and empty counts with ValueError — done; two old tests that documented the silent behaviour updated, one new test — pytest all passed — n
 - 2026-10-18 — M2 task 3: ipykernel added to dependencies, pytest as optional `dev` extra — done — pyproject parses with tomllib, pytest 22 passed (deps not reinstalled) — n
 - 2026-10-18 — M2 task 2: Ex 3 no longer pre-solved — done; student cells 23-25 replaced by TODO stubs with tool hints (CX textbook note kept), outputs cleared; teacher notebook untouched — notebook JSON loads, grep confirms no later cell uses the removed variables; not executed (stubs only) — n

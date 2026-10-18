@@ -34,16 +34,26 @@ def _counts_from_pub_result(pub_result) -> dict[str, int]:
     return dict(bit_array.get_counts())
 
 
-def simulate(circuit: QuantumCircuit, shots: int = 1024) -> dict[str, int]:
+def simulate(
+    circuit: QuantumCircuit, shots: int = 1024, seed: int | None = None
+) -> dict[str, int]:
     """Run ``circuit`` on the local simulator and return measurement counts.
 
     The circuit MUST end with measurements (one classical bit per qubit that
     is measured). For the exact statevector, use ``qclab.states.statevector_of``
     instead — a measurement destroys the superposition, so counts alone do not
     fully characterise the state.
+
+    Pass an integer ``seed`` to get the same counts on every run (useful for
+    self-checks); the default ``None`` gives fresh random samples each time.
     """
+    if not any(inst.operation.name == "measure" for inst in circuit.data):
+        raise ValueError(
+            "This circuit has no measurements, so there is nothing to count. "
+            "Add them first, e.g. qc.measure_all() (or qc.measure(qubit, bit))."
+        )
     backend = AerSimulator()
-    result = backend.run(circuit, shots=shots).result()
+    result = backend.run(circuit, shots=shots, seed_simulator=seed).result()
     return result.get_counts()
 
 
