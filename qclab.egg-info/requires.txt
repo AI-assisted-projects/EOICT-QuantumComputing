@@ -1,0 +1,7 @@
+qiskit<3.0,>=2.5
+qiskit-aer>=0.17
+qiskit-ibm-runtime>=0.40
+matplotlib>=3.9
+pylatexenc>=2.10
+python-dotenv>=1.0
+numpy>=1.26
