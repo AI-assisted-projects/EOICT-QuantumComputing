@@ -11,4 +11,8 @@ dependencies = [
     "pylatexenc>=2.10",
     "python-dotenv>=1.0",
     "numpy>=1.26",
+    "ipykernel>=6.29",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
